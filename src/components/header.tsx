@@ -2,15 +2,13 @@ import { Button } from "./ui/button";
 import { ThemeToggle } from "./themeToggle";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 import MobileMenu from "./mobileMenu";
 import Image from "next/image";
 
 // add signout
 
 const Header = () => {
-  const { userId } = auth();
-
   return (
     <header className="max-w-screen-xl mx-auto p-4 flex justify-between items-center">
       <Link href="/">
@@ -23,7 +21,7 @@ const Header = () => {
         />
       </Link>
       <div className="flex items-center space-x-4">
-        {!userId && (
+        <SignedOut>
           <div className="space-x-4 sm:block hidden">
             <Link href="/sign-up">
               <Button>Sign Up</Button>
@@ -34,8 +32,8 @@ const Header = () => {
               </Button>
             </Link>
           </div>
-        )}
-        {userId && (
+        </SignedOut>
+        <SignedIn>
           <div className="sm:flex items-center space-x-4 hidden">
             <Link href="/decks">
               <Button>My Decks</Button>
@@ -44,7 +42,7 @@ const Header = () => {
               <UserButton afterSignOutUrl="/" />
             </div>
           </div>
-        )}
+        </SignedIn>
         <ThemeToggle />
         <div className="sm:hidden block">
           <MobileMenu />
