@@ -4,6 +4,7 @@ import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs";
 import MobileMenu from "./mobileMenu";
+import Image from "next/image";
 
 // add signout
 
@@ -11,9 +12,15 @@ const Header = () => {
   const { userId } = auth();
 
   return (
-    <header className="max-w-screen-xl mx-auto p-4 flex justify-between">
+    <header className="max-w-screen-xl mx-auto p-4 flex justify-between items-center">
       <Link href="/">
-        <h1 className="text-3xl font-bold hover:text-primary">Cardlet</h1>
+        <Image
+          alt="Cardlet Logo"
+          src="/images/cardlet.png"
+          width={100}
+          height={100}
+          className="hover:opacity-80 transition-opacity"
+        />
       </Link>
       <div className="flex items-center space-x-4">
         {!userId && (
