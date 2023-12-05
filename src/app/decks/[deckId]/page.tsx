@@ -1,9 +1,9 @@
 import { supabase } from "@/utils/supabase";
-import { auth } from "@clerk/nextjs";
+import QuestionCard from "@/components/questionCard";
 
 interface CardType {
   id: string;
-  qustion: string;
+  question: string;
   answer: number;
   choices: {
     id: number;
@@ -36,7 +36,15 @@ export default async function DeckPage({ params }: { params: DeckPageParams }) {
   }
   return (
     <div>
-      <h2>{data.name}</h2>
+      <h2 className="text-center text-xl font-bold mb-2">{data.name}</h2>
+      <div className="space-y-4">
+        {
+          // map over cards
+          data.cards.map((card) => (
+            <QuestionCard key={card.id} card={card} />
+          ))
+        }
+      </div>
     </div>
   );
 }
