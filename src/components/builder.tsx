@@ -7,6 +7,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { supabase } from "@/utils/supabase";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 interface CardType {
   id: number;
@@ -107,8 +113,8 @@ export default function DeckBuilder({ userId }: DeckBuilderProps) {
 
   return (
     <div>
-      <h2 className="text-center text-2xl">Deck Builder</h2>
-      <div className="space-y-2 mb-2">
+      <h2 className="text-center text-2xl mb-2">Deck Builder</h2>
+      <Card className="space-y-2 mb-4 p-4">
         <Label className="text-lg" htmlFor="deckName">
           Deck Name
         </Label>
@@ -117,13 +123,23 @@ export default function DeckBuilder({ userId }: DeckBuilderProps) {
           placeholder="Study Deck"
           onChange={(e) => setDeck({ name: e.target.value })}
         />
-      </div>
+      </Card>
       <h3 className="text-xl">Cards</h3>
-      <p className="mb-4">
-        Give each card a study question, and 4 possible choices. Then make sure
-        to check the box next to the choice that contains the correct answer to
-        the study quesiton.
-      </p>
+      <Accordion collapsible className="w-full" type="single">
+        <AccordionItem value="instructions">
+          <AccordionTrigger className="text-muted-foreground justify-start">
+            Instructions
+          </AccordionTrigger>
+          <AccordionContent className="">
+            Give each card a study question, and 4 possible choices. Then make
+            sure to check the box next to the choice that contains the correct
+            answer to the study quesiton. Once you{"'"}ve added all of your
+            cards, click the {'"'}Finish Deck{'"'} button to save your deck,
+            then it
+            {"'"}s time to study!
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
       <div className="space-y-2">
         <Card className="p-4 space-y-2">
           <div>
