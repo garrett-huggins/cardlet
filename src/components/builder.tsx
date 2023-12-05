@@ -125,9 +125,9 @@ export default function DeckBuilder({ userId }: DeckBuilderProps) {
         />
       </Card>
       <h3 className="text-xl">Cards</h3>
-      <Accordion collapsible className="w-full" type="single">
+      <Accordion collapsible className="flex" type="single">
         <AccordionItem value="instructions">
-          <AccordionTrigger className="text-muted-foreground justify-start">
+          <AccordionTrigger className="text-muted-foreground justify-start py-0">
             Instructions
           </AccordionTrigger>
           <AccordionContent className="">
