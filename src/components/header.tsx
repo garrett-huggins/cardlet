@@ -3,6 +3,7 @@ import { ThemeToggle } from "./themeToggle";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs";
+import MobileMenu from "./mobileMenu";
 
 // add signout
 
@@ -16,7 +17,7 @@ const Header = () => {
       </Link>
       <div className="flex items-center space-x-4">
         {!userId && (
-          <div className="space-x-4">
+          <div className="space-x-4 sm:block hidden">
             <Link href="/sign-up">
               <Button>Sign Up</Button>
             </Link>
@@ -26,7 +27,7 @@ const Header = () => {
           </div>
         )}
         {userId && (
-          <div className="flex items-center space-x-4">
+          <div className="sm:flex items-center space-x-4 hidden">
             <Link href="/decks">
               <Button>My Decks</Button>
             </Link>
@@ -36,6 +37,9 @@ const Header = () => {
           </div>
         )}
         <ThemeToggle />
+        <div className="sm:hidden block">
+          <MobileMenu />
+        </div>
       </div>
     </header>
   );
