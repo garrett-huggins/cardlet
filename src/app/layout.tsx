@@ -7,7 +7,6 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Cardlet",
-  icons: { icon: "/images/favicon.ico" },
   description:
     "Master your subjects with customizable flashcards and collaborative learning on Cardlet.",
 };
