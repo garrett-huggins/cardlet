@@ -57,3 +57,21 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Clerk Styles */
+.cl-formButtonPrimary {
+  font-size: 14px;
+  text-transform: none;
+  background-color: #16a34a;
+}
+
+.cl-formButtonPrimary:hover,
+.cl-formButtonPrimary:focus,
+.cl-formButtonPrimary:active {
+  background-color: #04b545;
+}
+
+.cl-logoBox {
+  margin: 0 auto;
+  justify-content: center;
+}

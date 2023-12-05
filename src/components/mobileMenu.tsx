@@ -50,14 +50,14 @@ export default function MobileMenu() {
             <MenuLink href="/decks/builder" text="Create Deck" />
           </SheetDescription>
           <SheetFooter className="items-center mt-4">
-            <div className="flex w-full justify-between items-center">
-              <ThemeToggle />
-              <SheetClose asChild>
-                <Button onClick={() => signOut(() => router.push("/"))}>
-                  Sign Out
-                </Button>
-              </SheetClose>
-            </div>
+            <SheetClose asChild>
+              <Button
+                variant="destructive"
+                onClick={() => signOut(() => router.push("/"))}
+              >
+                Sign Out
+              </Button>
+            </SheetClose>
           </SheetFooter>
         </SheetContent>
       </SignedIn>
