@@ -1,4 +1,9 @@
-import { Card } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
 import Link from "next/link";
 
 interface DeckPreviewProps {
@@ -20,9 +25,14 @@ export default function DeckPreview({ deck }: { deck: DeckPreviewProps }) {
   const link = `/decks/${deck.id}`;
   return (
     <Link href={link}>
-      <Card className="p-4 w-full min-h-[200px]">
-        <h2 className="text-lg">{deck.name}</h2>
-        <p>{deck.cards.length} cards</p>
+      <Card className="w-full min-h-[200px] relative dark:hover:bg-primary-foreground hover:bg-primary-foreground">
+        <CardHeader>
+          <p className="text-lg font-semibold">{deck.name}</p>
+        </CardHeader>
+        <CardContent></CardContent>
+        <CardFooter className="absolute bottom-0 w-full">
+          <p className="text-muted-foreground">{deck.cards.length} cards</p>
+        </CardFooter>
       </Card>
     </Link>
   );

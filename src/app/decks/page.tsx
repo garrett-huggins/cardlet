@@ -23,12 +23,12 @@ export default async function Decks() {
   return (
     <div>
       <h2 className="text-center text-2xl">My Decks</h2>
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center my-4">
         <Link href="/decks/builder">
           <Button>Create Deck</Button>
         </Link>
       </div>
-      <div className="grid grid-cols-4 space-x-4">
+      <div className="md:grid lg:grid-cols-4 md:grid-cols-3 space-x-4">
         {decks?.map((deck) => (
           <DeckPreview key={deck.id} deck={deck} />
         ))}

@@ -9,7 +9,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div className="space-y-12">
-      <Card className="border-[3px] p-4">
+      <Card className="p-4">
         <CardHeader className="text-center">
           <h2 className="md:text-5xl sm:text-3xl text-2xl font-bold bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">
             Welcome to Cardlet
