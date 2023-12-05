@@ -22,7 +22,9 @@ const Header = () => {
               <Button>Sign Up</Button>
             </Link>
             <Link href="/sign-in">
-              <Button variant="ghost">Log In</Button>
+              <Button variant="ghost" className="border-2 border-primary">
+                Log In
+              </Button>
             </Link>
           </div>
         )}
@@ -31,7 +33,7 @@ const Header = () => {
             <Link href="/decks">
               <Button>My Decks</Button>
             </Link>
-            <div className="rounded-full border-2">
+            <div className="rounded-full border-2 border-primary">
               <UserButton afterSignOutUrl="/" />
             </div>
           </div>
