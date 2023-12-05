@@ -1,5 +1,6 @@
 import Header from "@/components/header";
 import { ClerkProvider } from "@clerk/nextjs";
+import { ThemeProvider } from "@/components/themeProvider";
 import type { Metadata } from "next";
 import { GeistSans, GeistMono } from "geist/font";
 import "./globals.css";
@@ -20,10 +21,19 @@ export default function RootLayout({
         <body
           className={`${GeistSans.variable} ${GeistMono.variable} font-sans`}
         >
-          <Header />
-          <main className="min-h-screen max-w-screen-xl mx-auto p-4">
-            {children}
-          </main>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="w-full bg-white dark:bg-black shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] mb-4">
+              <Header />
+            </div>
+            <main className="min-h-screen max-w-screen-xl mx-auto p-4">
+              {children}
+            </main>
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

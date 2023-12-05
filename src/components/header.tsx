@@ -1,4 +1,5 @@
 import { Button } from "./ui/button";
+import { ThemeToggle } from "./themeToggle";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs";
@@ -10,10 +11,10 @@ const Header = () => {
 
   return (
     <header className="max-w-screen-xl mx-auto p-4 flex justify-between">
-      <a href="/">
-        <h1 className="text-3xl font-bold">Cardlet</h1>
-      </a>
-      <div className="flex items-center">
+      <Link href="/">
+        <h1 className="text-3xl font-bold hover:text-primary">Cardlet</h1>
+      </Link>
+      <div className="flex items-center space-x-4">
         {!userId && (
           <div className="space-x-4">
             <Link href="/sign-up">
@@ -34,6 +35,7 @@ const Header = () => {
             </div>
           </div>
         )}
+        <ThemeToggle />
       </div>
     </header>
   );
