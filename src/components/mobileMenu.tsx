@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -12,7 +14,8 @@ import {
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs";
-import { SignOutButton } from "@clerk/nextjs";
+import { useClerk, SignedIn, SignedOut } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import { ThemeToggle } from "./themeToggle";
 import { Card } from "./ui/card";
 
@@ -27,11 +30,12 @@ const MenuLink = ({ href, text }: { href: string; text: string }) => (
 );
 
 export default function MobileMenu() {
-  const { userId } = auth();
+  const { signOut } = useClerk();
+  const router = useRouter();
 
-  if (userId) {
-    return (
-      <Sheet>
+  return (
+    <Sheet>
+      <SignedIn>
         <SheetTrigger asChild>
           <Button variant="outline">
             <Menu className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
@@ -48,31 +52,31 @@ export default function MobileMenu() {
           <SheetFooter className="items-center mt-4">
             <div className="flex w-full justify-between items-center">
               <ThemeToggle />
-              <SignOutButton />
+              <SheetClose asChild>
+                <Button onClick={() => signOut(() => router.push("/"))}>
+                  Sign Out
+                </Button>
+              </SheetClose>
             </div>
           </SheetFooter>
         </SheetContent>
-      </Sheet>
-    );
-  }
-
-  // NO USER
-  return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="outline">
-          <Menu className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
-          <span className="sr-only">Toggle menu</span>
-        </Button>
-      </SheetTrigger>
-      <SheetContent>
-        <SheetHeader className="mb-4" />
-        <SheetDescription className="text-center space-y-4">
-          <MenuLink href="/" text="Home" />
-          <MenuLink href="/sign-up" text="Sign Up" />
-          <MenuLink href="/sign-in" text="Log In" />
-        </SheetDescription>
-      </SheetContent>
+      </SignedIn>
+      <SignedOut>
+        <SheetTrigger asChild>
+          <Button variant="outline">
+            <Menu className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
+            <span className="sr-only">Toggle menu</span>
+          </Button>
+        </SheetTrigger>
+        <SheetContent>
+          <SheetHeader className="mb-4" />
+          <SheetDescription className="text-center space-y-4">
+            <MenuLink href="/" text="Home" />
+            <MenuLink href="/sign-up" text="Sign Up" />
+            <MenuLink href="/sign-in" text="Log In" />
+          </SheetDescription>
+        </SheetContent>
+      </SignedOut>
     </Sheet>
   );
 }

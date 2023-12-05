@@ -32,7 +32,7 @@ const Header = () => {
               <Button>My Decks</Button>
             </Link>
             <div className="rounded-full border-2">
-              <UserButton />
+              <UserButton afterSignOutUrl="/" />
             </div>
           </div>
         )}
