@@ -37,7 +37,7 @@ export default function QuestionCard({ card }: { card: CardType }) {
                       : ""
                   }`}
                 >
-                  <p>{choice.id + 1}) </p>
+                  <p>{choice.id}) </p>
                   <p>{choice.choice}</p>
                 </li>
               )
