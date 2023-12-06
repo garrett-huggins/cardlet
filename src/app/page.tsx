@@ -51,8 +51,8 @@ export default function Home() {
       <div>
         <h2 className="font-semibold text-xl mb-2">Features</h2>
         <div className="md:grid grid-cols-3 gap-4 md:space-y-0 space-y-4">
-          <Card className="overflow-hidden">
-            <CardHeader>
+          <Card className="overflow-hidden bg-[#6ac1ae] ">
+            <CardHeader className="bg-white">
               <Image
                 alt="Preview image of multiple cards"
                 src="/images/cards.png"
@@ -63,14 +63,14 @@ export default function Home() {
                 className="max-h-[120px] mx-auto"
               />
             </CardHeader>
-            <CardContent className="bg-[#6ac1ae] p-2 dark:text-black">
+            <CardContent className="p-2 dark:text-black">
               <p className="text-lg font-medium">Customizable Cards</p>
               <p>Tailor your study materials to your learning style.</p>
             </CardContent>
-            <CardFooter className="bg-[#6ac1ae] h-full" />
+            <CardFooter />
           </Card>
-          <Card className="overflow-hidden">
-            <CardHeader>
+          <Card className="overflow-hidden bg-[#85e6d1]">
+            <CardHeader className="bg-white">
               <Image
                 alt="Preview image of multiple mouse cursors working together on a single card"
                 src="/images/collab.png"
@@ -88,10 +88,10 @@ export default function Home() {
                 collaborative studying.
               </p>
             </CardContent>
-            <CardFooter className="bg-[#85e6d1] h-full" />
+            <CardFooter />
           </Card>
-          <Card className="overflow-hidden">
-            <CardHeader>
+          <Card className="bg-[#8bebae]">
+            <CardHeader className="bg-white">
               <Image
                 alt="Preview image of multiple mouse cursors working together on a single card"
                 src="/images/study.png"
@@ -102,11 +102,11 @@ export default function Home() {
                 className="max-h-[120px] mx-auto"
               />
             </CardHeader>
-            <CardContent className="bg-[#8bebae] p-2 dark:text-black">
+            <CardContent className="p-2 dark:text-black">
               <p className="text-lg font-medium">Smart Quiz Mode</p>
               <p>Test your knowledge and track your progress.</p>
             </CardContent>
-            <CardFooter className="text-center bg-[#8bebae] p-2 h-full dark:text-black">
+            <CardFooter className="text-center p-2 dark:text-black">
               <p className="text-sm">Coming soon!</p>
             </CardFooter>
           </Card>
