@@ -10,6 +10,7 @@ import { Button } from "./ui/button";
 import { Trash2 } from "lucide-react";
 import { supabase } from "@/utils/supabase";
 import { useAuth } from "@clerk/nextjs";
+import { ArrowRight } from "lucide-react";
 
 interface DeckPreviewProps {
   id: string;
@@ -67,13 +68,20 @@ export default function DeckPreview({
           <Trash2 />
         </Button>
       ) : null}
-      <Link className="h-full" href={link}>
+      <Link className="h-full group" href={link}>
         <Card className="w-full min-h-[200px] dark:hover:bg-primary-foreground hover:bg-primary-foreground">
           <CardHeader>
             <p className="text-lg font-semibold">{deck.name}</p>
           </CardHeader>
-          <CardFooter className="absolute bottom-0 w-full">
+          <CardFooter className="absolute bottom-0 w-full flex justify-between">
             <p className="text-muted-foreground">{deck.cards.length} cards</p>
+            <Button variant="link" className="group-hover:underline">
+              Study{" "}
+              <ArrowRight
+                size={15}
+                className="group-hover:translate-x-1 transition-transform ease-in-out"
+              />{" "}
+            </Button>
           </CardFooter>
         </Card>
       </Link>
