@@ -32,7 +32,7 @@ export default function QuestionCard({ card }: { card: CardType }) {
                 <li
                   key={choice.id}
                   onClick={() => setSelected(choice.id)}
-                  className={`flex space-x-2 list-none hover:bg-primary hover:text-primary-foreground rounded-lg p-2 hover:cursor-pointer ${
+                  className={`flex space-x-2 list-none hover:bg-muted hover:text-muted-foreground rounded-lg p-2 hover:cursor-pointer ${
                     selected === choice.id
                       ? "bg-primary text-primary-foreground"
                       : ""
