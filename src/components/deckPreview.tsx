@@ -56,26 +56,27 @@ export default function DeckPreview({
   // };
   // test();
   return (
-    <Card className="w-full min-h-[200px] relative dark:hover:bg-primary-foreground hover:bg-primary-foreground">
-      {showEdit && (
+    <div className="relative">
+      {showEdit ? (
         <Button
           //  @ts-ignore
           onClick={() => removeDeck(deck.id, userId)}
           variant="destructive"
-          className="absolute px-2 top-0 right-0 m-2 opacity-80"
+          className="absolute px-2 top-0 right-0 m-2 opacity-80 z-10"
         >
           <Trash2 />
         </Button>
-      )}
-      <Link href={link}>
-        <CardHeader>
-          <p className="text-lg font-semibold">{deck.name}</p>
-        </CardHeader>
-        <CardContent></CardContent>
-        <CardFooter className="absolute bottom-0 w-full">
-          <p className="text-muted-foreground">{deck.cards.length} cards</p>
-        </CardFooter>
+      ) : null}
+      <Link className="h-full" href={link}>
+        <Card className="w-full min-h-[200px] dark:hover:bg-primary-foreground hover:bg-primary-foreground">
+          <CardHeader>
+            <p className="text-lg font-semibold">{deck.name}</p>
+          </CardHeader>
+          <CardFooter className="absolute bottom-0 w-full">
+            <p className="text-muted-foreground">{deck.cards.length} cards</p>
+          </CardFooter>
+        </Card>
       </Link>
-    </Card>
+    </div>
   );
 }
