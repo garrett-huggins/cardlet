@@ -41,7 +41,13 @@ const removeDeck = async (id: string, userId: string) => {
   }
 };
 
-export default function DeckPreview({ deck }: { deck: DeckPreviewProps }) {
+export default function DeckPreview({
+  deck,
+  showEdit,
+}: {
+  deck: DeckPreviewProps;
+  showEdit: boolean;
+}) {
   const link = `/decks/${deck.id}`;
   const { userId } = useAuth();
   // const test = async () => {
@@ -51,14 +57,16 @@ export default function DeckPreview({ deck }: { deck: DeckPreviewProps }) {
   // test();
   return (
     <Card className="w-full min-h-[200px] relative dark:hover:bg-primary-foreground hover:bg-primary-foreground">
-      <Button
-        //  @ts-ignore
-        onClick={() => removeDeck(deck.id, userId)}
-        variant="destructive"
-        className="absolute px-2 top-0 right-0 m-2 opacity-80"
-      >
-        <Trash2 />
-      </Button>
+      {showEdit && (
+        <Button
+          //  @ts-ignore
+          onClick={() => removeDeck(deck.id, userId)}
+          variant="destructive"
+          className="absolute px-2 top-0 right-0 m-2 opacity-80"
+        >
+          <Trash2 />
+        </Button>
+      )}
       <Link href={link}>
         <CardHeader>
           <p className="text-lg font-semibold">{deck.name}</p>

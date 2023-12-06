@@ -6,8 +6,6 @@ import { SignedIn, SignedOut } from "@clerk/nextjs";
 import MobileMenu from "./mobileMenu";
 import Image from "next/image";
 
-// add signout
-
 const Header = () => {
   return (
     <header className="max-w-screen-xl mx-auto p-4 flex justify-between items-center">

@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs";
 import { supabase } from "@/utils/supabase";
-import DeckPreview from "@/components/deckPreview";
+import DeckPreviewContainer from "@/components/deckPreviewContainer";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -23,16 +23,16 @@ export default async function Decks() {
   return (
     <div>
       <h2 className="text-center text-2xl">My Decks</h2>
-      <div className="flex justify-center my-4">
-        <Link href="/decks/builder">
-          <Button>Create New Deck</Button>
-        </Link>
-      </div>
-      <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-3">
-        {decks?.map((deck) => (
-          <DeckPreview key={deck.id} deck={deck} />
-        ))}
-      </div>
+      {
+        // if decks is empty
+        !decks ? (
+          <div className="flex justify-center">
+            <p className="text-2xl">No decks yet</p>
+          </div>
+        ) : (
+          <DeckPreviewContainer decks={decks} />
+        )
+      }
     </div>
   );
 }
