@@ -4,7 +4,7 @@ import DeckPreview from "./deckPreview";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { PlusSquare } from "lucide-react";
+import { PlusSquare, FileEdit } from "lucide-react";
 
 interface DeckPreviewContainerProps {
   decks: {
@@ -45,7 +45,7 @@ export default function DeckPreviewContainer({
           </Button>
         </Link>
         <Button variant="secondary" onClick={() => setShowEdit(!showEdit)}>
-          Edit My Decks
+          <FileEdit className="mr-2" /> Edit My Decks
         </Button>
       </div>
       <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-3">
