@@ -178,7 +178,6 @@ export default function DeckBuilder({ userId }: DeckBuilderProps) {
 
   return (
     <div>
-      <Button onClick={() => setOpen(true)}>asd</Button>
       <AlertDialog open={open}>
         <AlertDialogContent>
           <AlertDialogHeader>

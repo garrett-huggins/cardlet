@@ -25,7 +25,7 @@ export default async function Decks() {
       <h2 className="text-center text-2xl">My Decks</h2>
       <div className="flex justify-center my-4">
         <Link href="/decks/builder">
-          <Button>Create Deck</Button>
+          <Button>Create New Deck</Button>
         </Link>
       </div>
       <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-3">
