@@ -15,7 +15,7 @@ const Header = () => {
           src="/images/cardlet.png"
           width={100}
           height={100}
-          className="hover:opacity-80 transition-opacity"
+          className="hover:opacity-80 transition-opacity max-h-[25px]"
         />
       </Link>
       <div className="flex items-center space-x-4">
