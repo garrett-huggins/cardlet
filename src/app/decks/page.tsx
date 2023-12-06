@@ -28,7 +28,7 @@ export default async function Decks() {
           <Button>Create Deck</Button>
         </Link>
       </div>
-      <div className="md:grid lg:grid-cols-4 md:grid-cols-3 space-x-4">
+      <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-3">
         {decks?.map((deck) => (
           <DeckPreview key={deck.id} deck={deck} />
         ))}

@@ -2,7 +2,7 @@ import { supabase } from "@/utils/supabase";
 import QuestionCard from "@/components/questionCard";
 
 interface CardType {
-  id: string;
+  id: number;
   question: string;
   answer: number;
   choices: {

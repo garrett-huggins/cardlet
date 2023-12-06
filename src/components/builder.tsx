@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card } from "@/components/ui/card";
+import { Card, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,6 +13,20 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { ListPlus } from "lucide-react";
+import BuilderCard from "./builderCard";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import Link from "next/link";
 
 interface CardType {
   id: number;
@@ -35,24 +49,52 @@ interface DeckBuilderProps {
 }
 
 export default function DeckBuilder({ userId }: DeckBuilderProps) {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
   const [deck, setDeck] = useState<DeckType>();
-  const [cardCount, setCardCount] = useState<number>(0);
   const [checked, setChecked] = useState<number>();
   const [cardQuestion, setCardQuestion] = useState<string>();
-  const [cardChoice1, setCardChoice1] = useState<string>();
-  const [cardChoice2, setCardChoice2] = useState<string>();
-  const [cardChoice3, setCardChoice3] = useState<string>();
-  const [cardChoice4, setCardChoice4] = useState<string>();
   const [cards, setCards] = useState<CardType[]>([]);
+  const [choices, setChoices] = useState<{ id: number; choice: string }[]>([
+    { id: 0, choice: "" },
+  ]);
 
   useEffect(() => {
-    console.log("Updated deck:", deck);
-    console.log("Updated cards:", cards);
-  }, [deck, cards]);
+    if (open) {
+      console.log("Opening dialog");
+      // reset state
+      setDeck(undefined);
+      setChecked(undefined);
+      setCardQuestion(undefined);
+      setCards([]);
+      setChoices([{ id: 0, choice: "" }]);
+    }
+  }, [open]);
+
+  const setChoice = (id: number, e: any) => {
+    const updatedChoices = choices.map((choice) =>
+      choice.id === id ? { ...choice, choice: e.target.value } : choice
+    );
+
+    // If the choice with id: 1 doesn't exist, add a new one
+    if (!choices.some((choice) => choice.id === id)) {
+      setChoices([...updatedChoices, { id: id, choice: e.target.value }]);
+    } else {
+      setChoices(updatedChoices);
+    }
+  };
 
   const handleCreateDeck = async () => {
-    if (!deck) return;
+    if (!deck) {
+      alert("Please enter a deck name");
+      return;
+    }
+    if (!cards.length) {
+      alert("Please add some cards");
+      return;
+    }
     console.log("Creating deck:", deck);
+    setLoading(true);
     try {
       const { data, error } = await supabase.from("decks").insert([
         {
@@ -63,43 +105,56 @@ export default function DeckBuilder({ userId }: DeckBuilderProps) {
       ]);
 
       if (error) {
-        console.error("Error inserting new deck:", error);
+        setLoading(false);
       } else {
-        console.log("New deck inserted successfully:", data);
+        setLoading(false);
+        setOpen(true);
       }
     } catch (error) {
-      console.error("Error inserting new deck:", error);
+      setLoading(false);
     }
   };
 
   const addCard = () => {
-    if (!deck) return;
-
-    if (
-      !cardQuestion ||
-      !cardChoice1 ||
-      !cardChoice2 ||
-      !cardChoice3 ||
-      !cardChoice4 ||
-      !checked
-    )
+    console.log("Adding card:", cardQuestion, choices, checked);
+    if (!deck) {
+      alert("Please enter a deck name");
       return;
+    }
+
+    if (!cardQuestion) {
+      alert("Please enter a study question");
+      return;
+    }
+
+    if (!choices) {
+      alert("Please enter choices");
+      return;
+    }
+
+    if (checked === undefined) {
+      alert("Please select the correct answer");
+      return;
+    }
+
+    // check if checked is on an empty choice
+    if (choices[checked].choice === "") {
+      alert("Please enter a choice for the correct answer");
+      return;
+    }
 
     const newCard = {
-      id: cardCount,
+      id: cards.length,
       question: cardQuestion,
       answer: checked,
-      choices: [
-        { id: 1, choice: cardChoice1 },
-        { id: 2, choice: cardChoice2 },
-        { id: 3, choice: cardChoice3 },
-        { id: 4, choice: cardChoice4 },
-      ],
+      choices: choices,
     };
+
+    console.log("New card:", newCard);
+    console.log("Choices:", choices);
 
     // Use the functional form of setCards to ensure you're working with the latest state
     setCards((prevCards) => [...prevCards, newCard]);
-    setCardCount((prevCardCount) => prevCardCount + 1);
 
     // Use the functional form of setDeck to ensure you're working with the latest state
     setDeck((prevDeck) => {
@@ -111,14 +166,46 @@ export default function DeckBuilder({ userId }: DeckBuilderProps) {
     });
   };
 
+  const removeCard = (id: number) => {
+    const updatedCards = cards.filter((card) => card.id !== id);
+    setCards(updatedCards);
+  };
+
+  const addChoice = () => {
+    const newChoice = { id: choices.length, choice: "" };
+    setChoices([...choices, newChoice]);
+  };
+
   return (
     <div>
+      <Button onClick={() => setOpen(true)}>asd</Button>
+      <AlertDialog open={open}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Success!</AlertDialogTitle>
+            <AlertDialogDescription>
+              Your new deck has been created!
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setOpen(false)}>
+              Close
+            </AlertDialogCancel>
+            <Link href="/decks">
+              <AlertDialogAction>View Decks</AlertDialogAction>
+            </Link>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       <h2 className="text-center text-2xl mb-2">Deck Builder</h2>
       <Card className="space-y-2 mb-4 p-4">
         <Label className="text-lg" htmlFor="deckName">
           Deck Name
         </Label>
         <Input
+          value={deck?.name || ""}
+          disabled={loading}
           id="deckName"
           placeholder="Study Deck"
           onChange={(e) => setDeck({ name: e.target.value })}
@@ -147,100 +234,100 @@ export default function DeckBuilder({ userId }: DeckBuilderProps) {
               Study Question:
             </Label>
             <Input
+              value={cardQuestion || ""}
+              disabled={loading}
               id="cardQuestion"
               placeholder="What is the capital of Texas?"
               onChange={(e) => setCardQuestion(e.target.value)}
             />
           </div>
-          <div>
-            <div className="flex items-center">
-              <Checkbox
-                className="mr-2"
-                id="choice1"
-                checked={checked === 1}
-                onCheckedChange={(checked) => {
-                  setChecked(1);
-                }}
-              />
-              <Label className="text-lg" htmlFor="choice1">
-                Choice 1:
-              </Label>
-            </div>
-            <Input
-              id="choice1"
-              placeholder="Austin"
-              onChange={(e) => setCardChoice1(e.target.value)}
+          {choices.map((choice) => (
+            <ChoiceInput
+              loading={loading}
+              key={choice.id}
+              id={choice.id}
+              placeholder={`Choice ${choice.id + 1}`}
+              onChange={setChoice}
+              checked={checked}
+              setChecked={setChecked}
+              choices={choices}
             />
-          </div>
-          <div>
-            <div className="flex items-center">
-              <Checkbox
-                className="mr-2"
-                id="choice2"
-                checked={checked === 2}
-                onCheckedChange={(checked) => {
-                  setChecked(2);
-                }}
-              />
-              <Label className="text-lg" htmlFor="choice2">
-                Choice 2:
-              </Label>
-            </div>
-            <Input
-              id="choice2"
-              placeholder="Houston"
-              onChange={(e) => setCardChoice2(e.target.value)}
-            />
-          </div>
-          <div>
-            <div className="flex items-center">
-              <Checkbox
-                className="mr-2"
-                id="choice3"
-                checked={checked === 3}
-                onCheckedChange={(checked) => {
-                  setChecked(3);
-                }}
-              />
-              <Label className="text-lg" htmlFor="choice3">
-                Choice 3:
-              </Label>
-            </div>
-            <Input
-              id="choice3"
-              placeholder="Dallas"
-              onChange={(e) => setCardChoice3(e.target.value)}
-            />
-          </div>
-          <div>
-            <div className="flex items-center">
-              <Checkbox
-                className="mr-2"
-                id="choice4"
-                checked={checked === 4}
-                onCheckedChange={(checked) => {
-                  setChecked(4);
-                }}
-              />
-              <Label className="text-lg" htmlFor="choice4">
-                Choice 4:
-              </Label>
-            </div>
-            <Input
-              id="choice4"
-              placeholder="San Antonio"
-              onChange={(e) => setCardChoice4(e.target.value)}
-            />
-          </div>
+          ))}
+          <CardFooter className="p-0 pt-1">
+            <Button variant="outline" onClick={() => addChoice()}>
+              <ListPlus className="mr-2" size={20} /> Add Choice
+            </Button>
+          </CardFooter>
         </Card>
         <div className="flex w-full justify-between items-center">
-          <Button onClick={() => addCard()}>Add Card</Button>
+          <Button variant="secondary" onClick={() => addCard()}>
+            Add Card
+          </Button>
           <p>
-            <strong>Card Count:</strong> {cardCount}
+            <strong>Card Count:</strong> {cards.length}
           </p>
-          <Button onClick={() => handleCreateDeck()}>Finish Deck</Button>
+          <Button disabled={loading} onClick={() => handleCreateDeck()}>
+            Finish Deck
+          </Button>
+        </div>
+        <hr />
+        <h3 className="text-xl font-medium text-center">Deck Preview</h3>
+        {cards.length === 0 && (
+          <p className="text-center">
+            Start adding cards to see a preview of your deck.
+          </p>
+        )}
+        <div className="space-y-4">
+          {
+            // map over cards
+            cards.map((card) => (
+              <BuilderCard key={card.id} card={card} removeCard={removeCard} />
+            ))
+          }
         </div>
       </div>
     </div>
   );
 }
+
+const ChoiceInput = ({
+  id,
+  placeholder,
+  onChange,
+  checked,
+  setChecked,
+  loading,
+  choices,
+}: {
+  id: number;
+  placeholder: string;
+  onChange: (idx: number, e: any) => void;
+  checked: number | undefined;
+  setChecked: (idx: number) => void;
+  loading: boolean;
+  choices: { id: number; choice: string }[];
+}) => (
+  <div>
+    <div className="flex items-center">
+      <Checkbox
+        disabled={loading}
+        className="mr-2"
+        id="choice4"
+        checked={checked === id}
+        onCheckedChange={(checked) => {
+          setChecked(id);
+        }}
+      />
+      <Label className="text-lg" htmlFor="choice4">
+        Choice {id + 1}:
+      </Label>
+    </div>
+    <Input
+      value={choices.find((choice) => choice.id === id)?.choice || ""}
+      onChange={(e) => onChange(id, e)}
+      disabled={loading}
+      id={`choice${id}`}
+      placeholder={placeholder}
+    />
+  </div>
+);
