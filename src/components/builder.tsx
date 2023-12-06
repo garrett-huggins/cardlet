@@ -217,11 +217,12 @@ export default function DeckBuilder({ userId }: DeckBuilderProps) {
             Instructions
           </AccordionTrigger>
           <AccordionContent className="">
-            Give each card a study question, and 4 possible choices. Then make
-            sure to check the box next to the choice that contains the correct
-            answer to the study quesiton. Once you{"'"}ve added all of your
-            cards, click the {'"'}Finish Deck{'"'} button to save your deck,
-            then it
+            Start off by giving each card a review/study question. Then begin
+            filling out the choices for each card, adding varying choice amounts
+            as needed. Make sure to check the box next to the choice that
+            contains the correct answer to the study quesiton. Once you{"'"}ve
+            added all of your cards, click the {'"'}
+            Finish Deck{'"'} button to save your deck, then it
             {"'"}s time to study!
           </AccordionContent>
         </AccordionItem>

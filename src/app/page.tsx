@@ -84,8 +84,8 @@ export default function Home() {
             <CardContent className="bg-[#85e6d1] p-2 dark:text-black">
               <p className="text-lg font-medium">Collaborative Learning</p>
               <p>
-                Study with classmates in real-time and share your decks so
-                others can study.
+                Study with classmates in real-time and share your decks for
+                collaborative studying.
               </p>
             </CardContent>
             <CardFooter className="bg-[#85e6d1] h-full" />
@@ -104,7 +104,7 @@ export default function Home() {
             </CardHeader>
             <CardContent className="bg-[#8bebae] p-2 dark:text-black">
               <p className="text-lg font-medium">Smart Quiz Mode</p>
-              <p>Test your knowledge and trach your progress.</p>
+              <p>Test your knowledge and track your progress.</p>
             </CardContent>
             <CardFooter className="text-center bg-[#8bebae] p-2 h-full dark:text-black">
               <p className="text-sm">Coming soon!</p>

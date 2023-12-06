@@ -20,6 +20,7 @@ interface CardType {
 
 export default function QuestionCard({ card }: { card: CardType }) {
   const [selected, setSelected] = useState<number | null>(null);
+  let counter = 0;
   return (
     <Card>
       <CardHeader className="text-lg">{card.question}</CardHeader>
@@ -37,7 +38,7 @@ export default function QuestionCard({ card }: { card: CardType }) {
                       : ""
                   }`}
                 >
-                  <p>{choice.id}) </p>
+                  <p>{++counter}) </p>
                   <p>{choice.choice}</p>
                 </li>
               )
