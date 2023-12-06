@@ -24,9 +24,15 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import Link from "next/link";
+import { Textarea } from "./ui/textarea";
+import { CardQuestions } from "@/lib/placeHolders";
+
+function getRandomQuestion() {
+  const randomIndex = Math.floor(Math.random() * CardQuestions.length);
+  return CardQuestions[randomIndex];
+}
 
 interface CardType {
   id: number;
@@ -58,6 +64,20 @@ export default function DeckBuilder({ userId }: DeckBuilderProps) {
   const [choices, setChoices] = useState<{ id: number; choice: string }[]>([
     { id: 0, choice: "" },
   ]);
+  const [choiceCount, setChoiceCount] = useState<number>(1);
+
+  const resetCard = () => {
+    setCardQuestion("");
+
+    // reset choices and keep number of choices based on choice count
+    const choiceCount = choices.length;
+    const updatedChoices = [...Array(choiceCount).keys()].map((i) => ({
+      id: i,
+      choice: "",
+    }));
+    setChecked(undefined);
+    setChoices(updatedChoices);
+  };
 
   useEffect(() => {
     if (open) {
@@ -115,6 +135,27 @@ export default function DeckBuilder({ userId }: DeckBuilderProps) {
     }
   };
 
+  const toggleChoiceCount = (count: number) => {
+    const choiceCount = choices.length;
+    if (choiceCount === count) {
+      return;
+    }
+
+    if (choiceCount > count) {
+      const updatedChoices = choices.slice(0, count);
+      setChoices(updatedChoices);
+    } else {
+      const updatedChoices = [
+        ...choices,
+        ...[...Array(count - choiceCount).keys()].map((i) => ({
+          id: choiceCount + i,
+          choice: "",
+        })),
+      ];
+      setChoices(updatedChoices);
+    }
+  };
+
   const addCard = () => {
     console.log("Adding card:", cardQuestion, choices, checked);
     if (!deck) {
@@ -160,8 +201,10 @@ export default function DeckBuilder({ userId }: DeckBuilderProps) {
     setDeck((prevDeck) => {
       if (!prevDeck || !prevDeck.cards) {
         // Handle the case where prevDeck or prevDeck.cards is undefined
+        resetCard();
         return { ...prevDeck, cards: [newCard] };
       }
+      resetCard();
       return { ...prevDeck, cards: [...prevDeck.cards, newCard] };
     });
   };
@@ -233,11 +276,11 @@ export default function DeckBuilder({ userId }: DeckBuilderProps) {
             <Label className="text-lg" htmlFor="cardQuestion">
               Study Question:
             </Label>
-            <Input
+            <Textarea
               value={cardQuestion || ""}
               disabled={loading}
               id="cardQuestion"
-              placeholder="What is the capital of Texas?"
+              placeholder={getRandomQuestion()}
               onChange={(e) => setCardQuestion(e.target.value)}
             />
           </div>
@@ -253,10 +296,24 @@ export default function DeckBuilder({ userId }: DeckBuilderProps) {
               choices={choices}
             />
           ))}
-          <CardFooter className="p-0 pt-1">
+          <CardFooter className="p-0 pt-1 sm:flex block space-y-3 justify-between">
             <Button variant="outline" onClick={() => addChoice()}>
               <ListPlus className="mr-2" size={20} /> Add Choice
             </Button>
+            <div className="flex items-center space-x-2">
+              <Input
+                type="number"
+                placeholder="4"
+                onChange={(e) => setChoiceCount(Number(e.target.value))}
+                className="max-w-[60px]"
+              />
+              <Button
+                variant="outline"
+                onClick={() => toggleChoiceCount(choiceCount)}
+              >
+                Toggle Choice Count
+              </Button>
+            </div>
           </CardFooter>
         </Card>
         <div className="flex w-full justify-between items-center">
