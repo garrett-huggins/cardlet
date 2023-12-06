@@ -51,8 +51,8 @@ export default function Home() {
       <div>
         <h2 className="font-semibold text-xl mb-2">Features</h2>
         <div className="md:grid grid-cols-3 gap-4 md:space-y-0 space-y-4">
-          <Card className="overflow-hidden bg-[#6ac1ae] ">
-            <CardHeader className="bg-white">
+          <Card className="overflow-hidden bg-[#6ac1ae] dark:bg-[#6ac1ae] ">
+            <CardHeader className="bg-white dark:bg-black">
               <Image
                 alt="Preview image of multiple cards"
                 src="/images/cards.png"
@@ -69,8 +69,8 @@ export default function Home() {
             </CardContent>
             <CardFooter />
           </Card>
-          <Card className="overflow-hidden bg-[#85e6d1]">
-            <CardHeader className="bg-white">
+          <Card className="overflow-hidden bg-[#85e6d1] dark:bg-[#85e6d1] ">
+            <CardHeader className="bg-white dark:bg-black">
               <Image
                 alt="Preview image of multiple mouse cursors working together on a single card"
                 src="/images/collab.png"
@@ -81,7 +81,7 @@ export default function Home() {
                 className="max-h-[120px] mx-auto"
               />
             </CardHeader>
-            <CardContent className="bg-[#85e6d1] p-2 dark:text-black">
+            <CardContent className="p-2 dark:text-black">
               <p className="text-lg font-medium">Collaborative Learning</p>
               <p>
                 Study with classmates in real-time and share your decks for
@@ -90,8 +90,8 @@ export default function Home() {
             </CardContent>
             <CardFooter />
           </Card>
-          <Card className="bg-[#8bebae]">
-            <CardHeader className="bg-white">
+          <Card className="overflow-hidden bg-[#8bebae] dark:bg-[#8bebae]">
+            <CardHeader className="bg-white dark:bg-black">
               <Image
                 alt="Preview image of multiple mouse cursors working together on a single card"
                 src="/images/study.png"
